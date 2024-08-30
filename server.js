@@ -16,7 +16,11 @@ const app = express();
 connectDB();
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes
+app.use(cors({
+  origin: 'http://localhost:3000', // Allow requests from your frontend during development
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(express.json()); // Parse incoming JSON requests
 
 // Route handling
