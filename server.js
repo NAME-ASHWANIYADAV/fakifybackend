@@ -1,6 +1,8 @@
 // Import required modules
 const express = require('express');
 const cors = require('cors');
+const multer = require('multer'); // For handling file uploads
+const path = require('path'); // For handling and transforming file paths
 const connectDB = require('./config/db'); // Import your MongoDB connection file
 const authRoutes = require('./routes/auth');
 const contactRoutes = require('./routes/contact');
@@ -23,10 +25,13 @@ app.use(cors({
 }));
 app.use(express.json()); // Parse incoming JSON requests
 
+// Set up static folder for serving uploaded files (optional, for accessing the files)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
 // Route handling
 app.use('/api/auth', authRoutes); // Auth routes under /api/auth
 app.use('/api/contact', contactRoutes); // Contact routes under /api/contact
-app.use('/api/video', videoRoutes); // Video routes under /api/video
+app.use('/api/videos', videoRoutes); // Correct the path to /api/videos for video routes
 
 // Fallback route for handling 404 errors
 app.use((req, res) => {
